@@ -9,6 +9,9 @@ class PriorityQueue(object):
         self._elem = vec[:]
         self.heapify(len(vec))
 
+    def __len__(self):
+        return self._size
+
     def parent(self, i):
         return (i-1)/2
 

@@ -93,7 +93,7 @@ class Vector(object):
 
     def binSearch(self, e, lo, hi):
         '[lo, hi)'
-        while lo < hi:
+        while(lo < hi):
             mid = (lo + hi) / 2
             if e < self._elem[mid]:
                 hi = mid

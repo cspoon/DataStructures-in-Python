@@ -25,6 +25,12 @@ class DoublyLinkedList:
             self.succ = node
             return node
 
+        def insertNodeAsPred(self, node):
+            node.succ, node.pred  = self, self.pred
+            self.pred.succ = node
+            self.pred = node
+            return node
+
     def __len__(self):
         return self._size
 
@@ -67,24 +73,29 @@ class DoublyLinkedList:
 
     def insertAsFirst(self, e):
         self._size += 1
-        self._header.insertAsSucc(e)
+        return self._header.insertAsSucc(e)
 
     def insertAsLast(self, e):
         self._size += 1
-        self._trailer.insertAsPred(e)
+        return self._trailer.insertAsPred(e)
 
     def insertBeforeP(self, p, e):
         self._size += 1
-        p.insertAsPred(e)
+        return p.insertAsPred(e)
 
     def insertAfterP(self, p, e):
         self._size += 1
-        p.insertAsSucc(e)
+        return p.insertAsSucc(e)
 
     def insertNodeAfterP(self, p, node):
         if not p == node:
             self._size += 1
-            p.insertNodeAsSucc(node)
+            return p.insertNodeAsSucc(node)
+
+    def insertNodeBeforeP(self, p, node):
+        if not p == node:
+            self._size += 1
+            return p.insertNodeAsPred(node)
 
     def remove(self, p):
         temp = p
@@ -150,6 +161,11 @@ class DoublyLinkedList:
             if match(p):
                 return p
         return None
+
+    def getNodeAfterNIndex(self, p, n):
+        for i in range(n):
+            p = p.succ
+        return p
 
     def max(self, p, n):
         p = p.pred
