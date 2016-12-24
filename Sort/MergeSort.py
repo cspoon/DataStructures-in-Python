@@ -39,36 +39,45 @@ class MergeSort(object):
 
     def arrayMerge(self, arr, lo, mid, hi):
         'merge [lo, mi) and [mi, hi)'
-        #b = arr[mid:hi]
-    
+        b = arr[lo:mid]
+        lb, lc = mid - lo, hi - mid
+        pb = pa = pc = 0
+        while pb < lb or pc < lc:
+            if pb < lb and (pc >= lc or b[pb] <= arr[mid+pc]):
+                arr[lo+pa] = b[pb]
+                pb += 1
+            elif pc < lc and (pb >= lb or arr[mid+pc] < b[pb]):
+                arr[lo+pa] = arr[mid+pc]
+                pc += 1
+            pa += 1
+
+
 if __name__ == '__main__':
     a = DoublyLinkedList.DoublyLinkedList()
+    ms = MergeSort()
+    '''
     a.insertAsLast(4)
     a.insertAsLast(3)
     a.insertAsLast(2)
     a.insertAsLast(1)
-
     a.insertAsLast(6)
     a.insertAsLast(9)
     a.insertAsLast(5)
-
-
     a.printAll()
-
-    ms = MergeSort()
     ms.listMergeSort(a, a._header.succ, a.__len__())
     a.printAll()
-'''
-i.listMergeSort(a)
-a.printAll()
-print '*' * 20
-b = Vector.Vector()
-b.append(5)
-b.append(7)
-b.append(3)
-b.append(2)
-b.append(1)
-b.printAll()
-i.arrayMergeSort(b)
-b.printAll()
-'''
+    print '*' * 20
+    '''
+
+    b = Vector.Vector()
+    b.append(1)
+    b.append(4)
+    b.append(3)
+    b.append(9)
+    b.append(11)
+    b.append(6)
+    b.append(2)
+    b.printAll()
+    ms.arrayMergeSort(b, 0,b.__len__())
+    b.printAll()
+
