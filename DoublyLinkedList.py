@@ -1,20 +1,19 @@
-import Utils
 
 
 class DoublyLinkedList:
 
-    class _Node(object):
-        def __init__(self, e, p, s):
-            self.data, self.pred, self.succ = e, p, s
+    class Node(object):
+        def __init__(self, e, p, s, list):
+            self.data, self.pred, self.succ, self.list = e, p, s, list
 
         def insertAsPred(self, e):
-            newNode = DoublyLinkedList._Node(e, self.pred, self)
+            newNode = self.list.nodeCreator(e, self.pred, self, self.list)
             self.pred.succ = newNode
             self.pred = newNode
             return newNode
 
         def insertAsSucc(self, e):
-            newNode = DoublyLinkedList._Node(e, self, self.succ)
+            newNode = self.list.nodeCreator(e, self, self.succ, self.list)
             self.succ.pred = newNode
             self.succ = newNode
             return newNode
@@ -31,16 +30,26 @@ class DoublyLinkedList:
             self.pred = node
             return node
 
+        def isTrailer(self):
+            return not self.succ
+
+        def isHeader(self):
+            return not self.pred
+
     def __len__(self):
         return self._size
 
-    def __init__(self):
-        self._header = self._Node("header", None, None)
-        self._trailer = self._Node("trailer", None, None)
+    def __init__(self, nodeCreator = None, arr=None):
+        self.nodeCreator = nodeCreator if nodeCreator else self.Node
+        self._header = self.nodeCreator("header", None, None, self)
+        self._trailer = self.nodeCreator("trailer", None, None, self)
         self._header.succ = self._trailer
         self._trailer.pred = self._header
         self._size = 0
         self.iter = None
+        if arr:
+            for i in arr:
+                self.insertAsLast(i)
 
     def __getitem__(self, item):
         if -1 < item < self._size:
@@ -61,6 +70,12 @@ class DoublyLinkedList:
     def __iter__(self):
         self.iter = self._header
         return self
+
+    def header(self):
+        return self._header
+
+    def trailer(self):
+        return self._trailer
 
     def isEmpty(self):
         return self._size <= 0
@@ -101,7 +116,6 @@ class DoublyLinkedList:
         temp = p
         p.pred.succ = p.succ
         p.succ.pred = p.pred
-        p = None
         self._size -= 1
         return temp
 

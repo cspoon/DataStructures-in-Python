@@ -13,6 +13,16 @@ def randomInt(low, high):
 def randomRange(range):
     return randomInt(0, range)
 
+def flipCoin(range = 1000):
+    return randomInt(0, range) > range / 2
+
+def clamp(val, min, max):
+    if val < min:
+        return min
+    elif val > max:
+        return max
+    else:
+        return val
 
 class NodeType(object):
 
