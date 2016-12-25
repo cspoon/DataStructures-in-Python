@@ -21,8 +21,22 @@ class SkipList(object):
     def isEmpty(self):
         return self._size <= 0
 
-    def remove(self, p):
-        pass
+    def remove(self, e):
+        p = self.search(e)
+        if not p or not p.data == e:
+            return
+        self.removeInLevel(p, 0)
+
+    def removeInLevel(self, p, level):
+        toRemove = []
+        while p:
+            p = self.lists[level].remove(p)
+            if self.lists[level].__len__() <= 0:
+                toRemove.append(self.lists[level])
+            p = p.above
+            level += 1
+        for i in toRemove:
+            self.lists.remove(i)
 
     def insert(self, e):
         p = self.search(e)
@@ -39,7 +53,7 @@ class SkipList(object):
         newNode = self.lists[level].insertAfterP(slot, e)
         newNode.setBelow(below)
         if Utils.flipCoin():
-            self._insertInAboveLevel(e, level + 1, below)
+            self._insertInAboveLevel(e, level + 1, newNode)
 
     def _insertAfterP(self, p, e):
         newNode = self.lists[0].insertAfterP(p, e)
@@ -84,11 +98,14 @@ class SkipList(object):
 
 if __name__ == '__main__':
     sl = SkipList()
-
     for i in range(15, 5, -1):
         if i == 11:
             continue
         sl.insert(i)
+    sl.printAll()
+    e = input('input data to remove')
+    sl.remove(e)
+    print ('*' * 30)
     sl.printAll()
     '''
     l1 = DoublyLinkedList.DoublyLinkedList(None, [6,7,8,9,10,11,12,13,14,15])
