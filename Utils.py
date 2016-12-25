@@ -10,11 +10,11 @@ def randomInt(low, high):
         low, high = high, low
     return random.randint(low, high)
 
-def randomRange(range):
+def randomRange(range = sys.maxint):
     return randomInt(0, range)
 
-def flipCoin(range = 1000):
-    return randomInt(0, range) > range / 2
+def flipCoin():
+    return randomInt(0, sys.maxint) > sys.maxint / 2
 
 def clamp(val, min, max):
     if val < min:
@@ -31,4 +31,4 @@ class NodeType(object):
     RC = -1
 
 if __name__ == '__main__':
-    print random.randint(0, sys.maxint)
+    print random.randint(0, 3)
