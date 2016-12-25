@@ -29,6 +29,9 @@ class BinNode:
     def insertAsRC(self, e):
         self.RC = BinNode(e, self)
 
+    def hasChild(self):
+        return self.hasRC() or self.hasLC()
+
     def hasLC(self):
         return self.LC
 

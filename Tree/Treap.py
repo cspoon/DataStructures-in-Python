@@ -31,7 +31,18 @@ class Treap(BST.BST):
         return g
 
     def remove(self, e):
-        pass
+        p = self.search(e)
+        if not p or not p.data == e:
+            return
+        while p.hasChild():
+            if not p.hasLC():
+                self.rotateLeft(p)
+            elif not p.hasRC():
+                self.rotateRight(p)
+            else:
+                self.rotateLeft(p) if self._getPriority(p.LC) > self._getPriority(p.RC) else self.rotateRight(p)
+        self.removeAt(p)
+
 
     def _getPriority(self, binNode):
         return self.priority[binNode]
@@ -55,4 +66,6 @@ if __name__ == '__main__':
     for i in a:
         tp.insert(i)
         tp.printAll()
-
+    e = input('input to remove: ')
+    tp.remove(e)
+    tp.printAll()

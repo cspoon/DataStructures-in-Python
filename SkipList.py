@@ -26,6 +26,7 @@ class SkipList(object):
         if not p or not p.data == e:
             return
         self.removeInLevel(p, 0)
+        self._size -= 1
 
     def removeInLevel(self, p, level):
         toRemove = []
