@@ -77,6 +77,8 @@ class BinNode:
 
     def rotateRight(self):
         'if self is root needs reset root in caller'
+        if not self.hasLC():
+            return None
         lc = self.LC
         lc.parent = self.parent
         if lc.parent:
@@ -93,6 +95,8 @@ class BinNode:
 
     def rotateLeft(self):
         'if self is root needs reset root in caller'
+        if not self.hasRC():
+            return None
         rc = self.RC
         rc.parent = self.parent
         if rc.parent:

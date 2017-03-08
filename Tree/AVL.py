@@ -21,7 +21,6 @@ class AVL(BST.BST):
                     gParent.LC = rotatedRoot
                 else:
                     gParent.RC = rotatedRoot
-                break
             else:
                 self.updataHight(g)
         return g
@@ -58,6 +57,14 @@ if __name__ == '__main__':
 
     for i in a:
         avl.insert(i)
+        avl.printAll()
+    print ('hehehehe~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
     avl.printAll()
-    avl.remove(29)
+    avl.remove(17)
     avl.printAll()
+
+    print('size = ' + avl.size().__str__())
+    avl.remove(32)
+    print('size = ' + avl.size().__str__())
+    avl.printAll()
+    print('size = ' + avl.size().__str__())
